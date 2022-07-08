@@ -4,7 +4,7 @@ import Login from "./Containers/Authentication/login";
 import Register from "./Containers/Authentication/register";
 import Landing from "./Containers/Landing/landing";
 import Dashboard from "./Containers/Dashboard/dashboard";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import GetTestimonial from "./Containers/testimonial";
 
 function App() {

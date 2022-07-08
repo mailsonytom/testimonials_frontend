@@ -1,13 +1,72 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Input, Button } from "antd";
 import "antd/dist/antd.css";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../Contexts/AuthContext";
+import { Axios } from "../../base";
+import axios from 'axios';
+
+
+type LoginPayload = {
+  username: string;
+  password?: string;
+};
 
 const Login = () => {
+  const [username, setusername] = useState("");
+  const [password, setpassword] = useState("");
+
+  const {
+    state: { token, lastLogin },
+    dispatch,
+  } = useAuth();
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (token) {
+      navigate("/dashboard");
+    }
+  }, [dispatch]);
 
   const toRegister = () => {
     navigate("/register");
+  };
+
+  const onUsernameChange = (e: any) => {
+    setusername(e.target.value);
+  };
+
+  const onPasswordChange = (e: any) => {
+    setpassword(e.target.value);
+  };
+
+  const onLogin = () => {
+    console.log("Inside login");
+    // setLoading(true);
+    // setErrorMessage("");
+    // setSuccessMessage("");
+    const payload: LoginPayload = {
+      username,
+      password,
+    };
+    console.log("Going to send", payload);
+    axios.post("localhost:8080/login", payload)
+      .then((response) => {
+        console.log("login response::", response.data);
+        const { token, lastLogin } = response.data.data;
+        localStorage.setItem("PLTOKEN", token);
+        dispatch({ type: "setUser", payload: { token, lastLogin } });
+        navigate("/dashboard");
+      })
+      .catch((err) => {
+        // setLoading(false);
+        // setErrorMessage(
+        console.log(
+          err.response || "Unable to login. Check your credentials."
+        );
+        // );
+      });
   };
 
   return (
@@ -27,11 +86,16 @@ const Login = () => {
           </span>
         </div>
         <div className="col-span-1 bg-slate-200 p-10 rounded-md">
-          <Input placeholder="Username" className="p-5 rounded bg-black	" />
+          <Input
+            placeholder="Username"
+            className="p-5 rounded bg-black	"
+            onChange={onUsernameChange}
+          />
           <Input
             type="password"
             placeholder="Password"
             className="p-5 rounded bg-black	"
+            onChange={onPasswordChange}
           />
           <Button
             block
@@ -39,6 +103,7 @@ const Login = () => {
             shape="round"
             size="middle"
             className="mt-6"
+            onClick={onLogin}
           >
             LOGIN
           </Button>
