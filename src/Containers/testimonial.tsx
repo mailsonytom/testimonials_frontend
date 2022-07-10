@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Input, Button } from "antd";
 import "antd/dist/antd.css";
-import { useAuth } from "../Contexts/AuthContext";
+// import { useAuth } from "../Contexts/AuthContext";
 import { Axios } from "../base";
 
 const { TextArea } = Input;
@@ -24,10 +24,10 @@ const GetTestimonial = () => {
     id && setcompId(id);
   }, []);
 
-  const {
-    state: { accessToken, cmpId },
-    dispatch,
-  } = useAuth();
+  // const {
+  //   state: { accessToken, cmpId },
+  //   dispatch,
+  // } = useAuth();
 
   const onChangeFullName = (e: any) => {
     setfullName(e.target.value);

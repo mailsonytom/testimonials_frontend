@@ -7,6 +7,7 @@ import Dashboard from "./Containers/Dashboard/dashboard";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import GetTestimonial from "./Containers/testimonial";
 import { useAuth } from "./Contexts/AuthContext";
+import Logout from "./Containers/Authentication/logout";
 
 function App() {
   const { dispatch } = useAuth();
@@ -28,6 +29,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/getdata" element={<GetTestimonial />} />
+          <Route path="/logout" element={<Logout />} />
         </Routes>
       </BrowserRouter>
     </div>

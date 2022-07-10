@@ -23,7 +23,7 @@ function authReducer(state: State, action: Action | SetTokenAction) {
       return { ...action.payload };
     }
     case "setToken": {
-      return { ...state, token: action.payload.accessToken };
+      return { ...state, accessToken: action.payload.accessToken };
     }
     default: {
       throw new Error(`Unhandled action type: ${action}`);

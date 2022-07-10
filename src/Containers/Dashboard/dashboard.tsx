@@ -2,10 +2,19 @@ import React, { useState, useEffect } from "react";
 import { Card } from "antd";
 import { useAuth } from "../../Contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { Axios } from "../../base";
+import { Input, Button } from "antd";
+import "antd/dist/antd.css";
 
 const Dashboard = () => {
   const [initial, setinitial] = useState("");
   const [myDatas, setmyDatas] = useState<any[]>([]);
+  const [company, setcompany] = useState("");
+  const [customerDetails, setcustomerDetails] = useState<{
+    data: string[];
+  }>(() => ({
+    data: [],
+  }));
 
   const {
     state: { accessToken, cmpId },
@@ -18,40 +27,49 @@ const Dashboard = () => {
     if (!accessToken) {
       navigate("/login");
       return;
+    } else {
+      const payload = {
+        CMP: cmpId || localStorage.getItem("CMP_id"),
+      };
+
+      Axios.post("/getAll", payload).then((response) => {
+        setcustomerDetails({ data: [] });
+        setcompany(response.data.data.company);
+        setcustomerDetails({ data: response.data.data.Customers });
+      });
     }
   }, []);
 
-  useEffect(() => {
-    return () => {
-      // userAction();
-      console.log(accessToken);
-      console.log(cmpId);
-    };
-  }, [initial]);
-
-  // const userAction = async () => {
-  //   const response = await fetch("http://localhost:8080/testimonials");
-  //   const myJson = await response.json();
-  //   console.log(myJson);
-  //   myDatas.push(...myDatas, myJson);
-  // };
+  const toLogout = () => {
+    console.log("Logout");
+    navigate("/logout");
+  };
 
   return (
     <div>
-      <h1>All Testimonials</h1>
+      <div>
+        <p className="font-serif text-xl subpixel-antialiased	font-extrabold tracking-wide mt-5">
+          Testimonials
+        </p>
+        <p className="text-black text-sm text-end mr-5 -mt-10">
+          <Button type="primary" size="small" onClick={toLogout}>
+            LOGOUT
+          </Button>
+        </p>
+      </div>
       <a href="http://localhost:3000/getdata">http://localhost:3000/getdata</a>
       <div className="h-56 grid grid-cols-4 gap-3 content-start p-10">
-        {myDatas &&
-          myDatas.map((myData) => {
+        {customerDetails.data.length > 0 &&
+          customerDetails.data.map((customer: any) => {
             return (
               <Card
-                key={myData._id}
-                className="bg-gray-400 content-start"
-                style={{ width: 300 }}
+                key={customer.cust_id}
+                className="font-medium tracking-tight text-start"
+                style={{ width: 300, backgroundColor: "#9bccbd" }}
               >
-                <p>Name: {myData.user_name}</p>
-                <p>Email: {myData.user_email}</p>
-                <p className="truncate">Message: {myData.text}</p>
+                <p>Name: {customer.cust_name}</p>
+                <p>Email: {customer.email}</p>
+                <p className="truncate">Message: {customer.testimonial}</p>
               </Card>
             );
           })}
