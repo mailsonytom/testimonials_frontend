@@ -1,16 +1,23 @@
 import React, { useState } from "react";
-import { Input, Button } from "antd";
+import { Input, Button, Alert } from "antd";
 import "antd/dist/antd.css";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { createNewUser } from "./api";
+import { useAuth } from "../../Contexts/AuthContext";
+import { Axios } from "../../base";
+
+type RegisterPayload = {
+  fullName: string;
+  cmpName: string;
+  username: string;
+  password?: string;
+};
 
 const Register = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const [fullName, setfullName] = useState("");
-  const [email, setemail] = useState("");
+  const [cmpName, setcmpName] = useState("");
   const [username, setusername] = useState("");
   const [password, setpassword] = useState("");
 
@@ -19,12 +26,11 @@ const Register = () => {
   };
 
   const changeFullName = (e: any) => {
-    console.log(e);
     setfullName(e.target.value);
   };
 
-  const changeEmail = (e: any) => {
-    setemail(e.target.value);
+  const changeCmpName = (e: any) => {
+    setcmpName(e.target.value);
   };
 
   const changeUsername = (e: any) => {
@@ -35,22 +41,33 @@ const Register = () => {
     setpassword(e.target.value);
   };
 
+  const successAlert = () => {
+    return alert("Registration successfull");
+  };
+
   const registerUser = () => {
-    const userData = {
-      name: fullName,
-      email: email,
-      username: username,
-      password: password,
+    const payload: RegisterPayload = {
+      fullName,
+      cmpName,
+      username,
+      password,
     };
-    if (
-      userData.name &&
-      userData.email &&
-      userData.username &&
-      userData.password
-    ) {
-        console.log("Inside register go")
-    //   dispatch(createNewUser(userData));
-    }
+    Axios.post("/register", payload)
+      .then((response) => {
+        console.log("register response::", response.data);
+        if (response.data.msg === "User registered") {
+          successAlert();
+          setTimeout(() => {
+            navigate("/login");
+          }, 2000);
+        }
+      })
+      .catch((err) => {
+        console.log(
+          err || err.response
+          // || "Unable to login. Check your credentials."
+        );
+      });
   };
 
   return (
@@ -76,9 +93,9 @@ const Register = () => {
             onChange={changeFullName}
           />
           <Input
-            placeholder="Email"
+            placeholder="Company Name"
             className="p-5 rounded bg-black"
-            onChange={changeEmail}
+            onChange={changeCmpName}
           />
           <Input
             placeholder="Username"
