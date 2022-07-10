@@ -5,6 +5,8 @@ type State = {
   user_id: string;
   user_name: string;
   username: string;
+  cmpName: string;
+  cmpId: string;
 };
 type Action = { type: "setUser"; payload: State };
 type SetTokenAction = { type: "setToken"; payload: Pick<State, "accessToken"> };
@@ -36,6 +38,8 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     user_id: "",
     user_name: "",
     username: "",
+    cmpName: "",
+    cmpId: "",
   });
   // NOTE: you *might* need to memoize this value
   // Learn more in http://kcd.im/optimize-context

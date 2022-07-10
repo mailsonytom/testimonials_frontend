@@ -48,12 +48,20 @@ const Login = () => {
       .then((response) => {
         console.log("login response::", response.data);
         if (response.data.data) {
-          const { accessToken, user_id, user_name, username } =
+          const { accessToken, user_id, user_name, username, cmpName, cmpId } =
             response.data.data;
           localStorage.setItem("TOKEN", accessToken);
+          localStorage.setItem("CMP_id", cmpId);
           dispatch({
             type: "setUser",
-            payload: { accessToken, user_id, user_name, username },
+            payload: {
+              accessToken,
+              user_id,
+              user_name,
+              username,
+              cmpName,
+              cmpId,
+            },
           });
           navigate("/dashboard");
         }

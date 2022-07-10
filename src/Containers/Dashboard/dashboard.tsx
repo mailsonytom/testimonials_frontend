@@ -8,7 +8,7 @@ const Dashboard = () => {
   const [myDatas, setmyDatas] = useState<any[]>([]);
 
   const {
-    state: { accessToken },
+    state: { accessToken, cmpId },
     dispatch,
   } = useAuth();
 
@@ -24,6 +24,8 @@ const Dashboard = () => {
   useEffect(() => {
     return () => {
       // userAction();
+      console.log(accessToken);
+      console.log(cmpId);
     };
   }, [initial]);
 

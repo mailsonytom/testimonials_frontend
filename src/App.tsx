@@ -12,7 +12,7 @@ function App() {
   const { dispatch } = useAuth();
 
   useEffect(() => {
-    const tokenFromLS = localStorage.getItem("PLTOKEN");
+    const tokenFromLS = localStorage.getItem("TOKEN");
     if (tokenFromLS) {
       dispatch({ type: "setToken", payload: { accessToken: tokenFromLS } });
     }
