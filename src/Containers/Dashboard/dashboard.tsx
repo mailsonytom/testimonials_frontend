@@ -1,22 +1,38 @@
 import React, { useState, useEffect } from "react";
 import { Card } from "antd";
+import { useAuth } from "../../Contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const [initial, setinitial] = useState("");
   const [myDatas, setmyDatas] = useState<any[]>([]);
 
+  const {
+    state: { accessToken },
+    dispatch,
+  } = useAuth();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!accessToken) {
+      navigate("/login");
+      return;
+    }
+  }, []);
+
   useEffect(() => {
     return () => {
-      userAction();
+      // userAction();
     };
   }, [initial]);
 
-  const userAction = async () => {
-    const response = await fetch("http://localhost:8080/testimonials");
-    const myJson = await response.json();
-    console.log(myJson);
-    myDatas.push(...myDatas, myJson);
-  };
+  // const userAction = async () => {
+  //   const response = await fetch("http://localhost:8080/testimonials");
+  //   const myJson = await response.json();
+  //   console.log(myJson);
+  //   myDatas.push(...myDatas, myJson);
+  // };
 
   return (
     <div>

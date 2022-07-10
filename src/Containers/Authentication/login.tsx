@@ -4,8 +4,6 @@ import "antd/dist/antd.css";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../Contexts/AuthContext";
 import { Axios } from "../../base";
-import axios from 'axios';
-
 
 type LoginPayload = {
   username: string;
@@ -17,14 +15,14 @@ const Login = () => {
   const [password, setpassword] = useState("");
 
   const {
-    state: { token, lastLogin },
+    state: { accessToken },
     dispatch,
   } = useAuth();
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (token) {
+    if (accessToken) {
       navigate("/dashboard");
     }
   }, [dispatch]);
@@ -42,30 +40,28 @@ const Login = () => {
   };
 
   const onLogin = () => {
-    console.log("Inside login");
-    // setLoading(true);
-    // setErrorMessage("");
-    // setSuccessMessage("");
     const payload: LoginPayload = {
       username,
       password,
     };
-    console.log("Going to send", payload);
-    axios.post("localhost:8080/login", payload)
+    Axios.post("/login", payload)
       .then((response) => {
         console.log("login response::", response.data);
-        const { token, lastLogin } = response.data.data;
-        localStorage.setItem("PLTOKEN", token);
-        dispatch({ type: "setUser", payload: { token, lastLogin } });
-        navigate("/dashboard");
+        if (response.data.data) {
+          const { accessToken, _id, name, username } = response.data.data;
+          localStorage.setItem("TOKEN", accessToken);
+          dispatch({
+            type: "setUser",
+            payload: { accessToken, _id, name, username },
+          });
+          navigate("/dashboard");
+        }
       })
       .catch((err) => {
-        // setLoading(false);
-        // setErrorMessage(
         console.log(
-          err.response || "Unable to login. Check your credentials."
+          err || err.response
+          // || "Unable to login. Check your credentials."
         );
-        // );
       });
   };
 
