@@ -2,8 +2,8 @@ import React, { createContext } from "react";
 
 type State = {
   accessToken: string;
-  _id: string;
-  name: string;
+  user_id: string;
+  user_name: string;
   username: string;
 };
 type Action = { type: "setUser"; payload: State };
@@ -33,8 +33,8 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
   const [state, dispatch] = React.useReducer(authReducer, {
     // token: "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJwaW5saXYiLCJzdWIiOiI2MjQ4ODY3ODI2MzViMTllMjhjZGVlYTAiLCJpYXQiOjE2NDg5MjA0NjcsImV4cCI6MTY1MTUxMjQ2N30.WYLo9LHw_nzZIGAZLo5VSxqbu5Yjb12Ci2vbOoYRc6k",
     accessToken: "",
-    _id: "",
-    name: "",
+    user_id: "",
+    user_name: "",
     username: "",
   });
   // NOTE: you *might* need to memoize this value
