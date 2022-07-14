@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Axios } from "../../base";
 import { Input, Button } from "antd";
 import "antd/dist/antd.css";
+import CodeEditor from "@uiw/react-textarea-code-editor";
 
 var CryptoJS = require("crypto-js");
 const secretKey = process.env.REACT_APP_MY_SECRET_KEY;
@@ -20,6 +21,7 @@ const Dashboard = () => {
   }));
 
   const [cipherText, setcipherText] = useState("");
+  const [code, setCode] = React.useState("");
 
   const {
     state: { accessToken, cmpId },
@@ -49,12 +51,21 @@ const Dashboard = () => {
     }
   }, []);
 
+  useEffect(() => {
+    setCode(
+      `<script src="/js/iframeResizer.min.js"></script>
+<iframe style="width: 100%; position: absolute; height: 100%; border: none;" id="testimonialIframe"
+        src="http://localhost:3000/wall-of-love?cmp=${cipherText}"></iframe>
+<script> iFrameResize({ log: true }, "#testimonialIframe"); </script>`
+    );
+  }, [cipherText]);
+
   const toLogout = () => {
     navigate("/logout");
   };
 
   return (
-    <div>
+    <div className="h-100%">
       <div>
         <p className="font-serif text-xl subpixel-antialiased	font-extrabold tracking-wide mt-5">
           Testimonials
@@ -73,24 +84,53 @@ const Dashboard = () => {
           </a>
         </div>
       )}
-      <div>
-        <h4>SCRIPT:</h4>
-      </div>
-      <div className="h-56 grid grid-cols-4 gap-3 content-start p-10">
-        {customerDetails.data.length > 0 &&
-          customerDetails.data.map((customer: any) => {
-            return (
-              <Card
-                key={customer.cust_id}
-                className="font-medium tracking-tight text-start"
-                style={{ width: 300, backgroundColor: "#9bccbd" }}
+
+      <div className="grid-rows-2">
+        <div className="h-100 grid grid-cols-4 gap-3 content-start p-10">
+          {customerDetails.data.length > 0 &&
+            customerDetails.data.map((customer: any) => {
+              return (
+                <Card
+                  key={customer.cust_id}
+                  className="font-medium tracking-tight text-start"
+                  style={{ width: 300, backgroundColor: "#9bccbd" }}
+                >
+                  <p>Name: {customer.cust_name}</p>
+                  <p>Email: {customer.email}</p>
+                  <p className="truncate">Message: {customer.testimonial}</p>
+                </Card>
+              );
+            })}
+        </div>
+        <div>
+          {cipherText && (
+            <div>
+              <h4
+                className="ml-8 mr-8 py-2"
+                style={{
+                  backgroundColor: "#272b2b",
+                  color: "whitesmoke",
+                }}
               >
-                <p>Name: {customer.cust_name}</p>
-                <p>Email: {customer.email}</p>
-                <p className="truncate">Message: {customer.testimonial}</p>
-              </Card>
-            );
-          })}
+                ADD THIS SCRIPT TO YOUR PAGE
+              </h4>
+              <CodeEditor
+                value={code}
+                language="js"
+                readOnly
+                padding={15}
+                className="ml-8 mr-8"
+                style={{
+                  fontSize: 12,
+                  backgroundColor: "#272b2b",
+                  fontFamily:
+                    "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
+                }}
+              />
+              <h6>....</h6>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
