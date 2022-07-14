@@ -6,6 +6,9 @@ import { Axios } from "../../base";
 import { Input, Button } from "antd";
 import "antd/dist/antd.css";
 
+var CryptoJS = require("crypto-js");
+const secretKey = process.env.REACT_APP_MY_SECRET_KEY;
+
 const Dashboard = () => {
   const [initial, setinitial] = useState("");
   const [myDatas, setmyDatas] = useState<any[]>([]);
@@ -15,6 +18,8 @@ const Dashboard = () => {
   }>(() => ({
     data: [],
   }));
+
+  const [cipherText, setcipherText] = useState("");
 
   const {
     state: { accessToken, cmpId },
@@ -28,8 +33,9 @@ const Dashboard = () => {
       navigate("/login");
       return;
     } else {
+      const Comp_id = cmpId || localStorage.getItem("CMP_id");
       const payload = {
-        CMP: cmpId || localStorage.getItem("CMP_id"),
+        CMP: Comp_id,
       };
 
       Axios.post("/getAll", payload).then((response) => {
@@ -37,11 +43,13 @@ const Dashboard = () => {
         setcompany(response.data.data.company);
         setcustomerDetails({ data: response.data.data.Customers });
       });
+      setcipherText(
+        CryptoJS.AES.encrypt(JSON.stringify(Comp_id), secretKey).toString()
+      );
     }
   }, []);
 
   const toLogout = () => {
-    console.log("Logout");
     navigate("/logout");
   };
 
@@ -57,7 +65,17 @@ const Dashboard = () => {
           </Button>
         </p>
       </div>
-      <a href="http://localhost:3000/getdata">http://localhost:3000/getdata</a>
+      {cipherText && (
+        <div>
+          <span>Add New Testimonial Link: </span>
+          <a href={`http://localhost:3000/getdata?cmp=${cipherText}`}>
+            {`http://localhost:3000/getdata?cmp=${cipherText}`}
+          </a>
+        </div>
+      )}
+      <div>
+        <h4>SCRIPT:</h4>
+      </div>
       <div className="h-56 grid grid-cols-4 gap-3 content-start p-10">
         {customerDetails.data.length > 0 &&
           customerDetails.data.map((customer: any) => {

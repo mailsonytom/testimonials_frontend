@@ -3,8 +3,11 @@ import { Input, Button } from "antd";
 import "antd/dist/antd.css";
 // import { useAuth } from "../Contexts/AuthContext";
 import { Axios } from "../base";
+import { useLocation } from "react-router-dom";
 
 const { TextArea } = Input;
+var CryptoJS = require("crypto-js");
+const secretKey = process.env.REACT_APP_MY_SECRET_KEY;
 
 type TestimonialPayload = {
   fullName: string;
@@ -18,11 +21,21 @@ const GetTestimonial = () => {
   const [email, setemail] = useState("");
   const [compId, setcompId] = useState("");
   const [text, settext] = useState("");
+  const [mount, setmount] = useState("initial");
+
+  const location = useLocation();
 
   useEffect(() => {
-    let id = localStorage.getItem("CMP_id");
-    id && setcompId(id);
-  }, []);
+    const urlParams = new URLSearchParams(location.search);
+    const id = urlParams.get("cmp");
+    const NewId = id && id.replaceAll(" ", "+");
+    var bytesData =
+      NewId &&
+      CryptoJS.AES.decrypt(NewId, secretKey).toString(CryptoJS.enc.Utf8);
+    var decryptedData = JSON.parse(bytesData);
+
+    decryptedData && setcompId(decryptedData);
+  }, [mount]);
 
   // const {
   //   state: { accessToken, cmpId },
@@ -42,6 +55,7 @@ const GetTestimonial = () => {
   };
 
   const sendTestimonial = () => {
+    console.log(compId);
     const payload: TestimonialPayload = {
       fullName,
       email,
