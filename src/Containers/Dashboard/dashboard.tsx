@@ -6,6 +6,8 @@ import { Axios } from "../../base";
 import { Input, Button } from "antd";
 import "antd/dist/antd.css";
 import CodeEditor from "@uiw/react-textarea-code-editor";
+import NavigationBar from "../Navigation";
+import TestimonialCard from "../../Components/TestimonialCard";
 
 var CryptoJS = require("crypto-js");
 const secretKey = process.env.REACT_APP_MY_SECRET_KEY;
@@ -66,6 +68,7 @@ const Dashboard = () => {
 
   return (
     <div className="h-100%">
+      <NavigationBar />
       <div>
         <p className="font-serif text-xl subpixel-antialiased	font-extrabold tracking-wide mt-5">
           Testimonials
@@ -89,16 +92,15 @@ const Dashboard = () => {
         <div className="h-100 grid grid-cols-4 gap-3 content-start p-10">
           {customerDetails.data.length > 0 &&
             customerDetails.data.map((customer: any) => {
+              console.log(customer);
               return (
-                <Card
+                <TestimonialCard
                   key={customer.cust_id}
                   className="font-medium tracking-tight text-start"
-                  style={{ width: 300, backgroundColor: "#9bccbd" }}
-                >
-                  <p>Name: {customer.cust_name}</p>
-                  <p>Email: {customer.email}</p>
-                  <p className="truncate">Message: {customer.testimonial}</p>
-                </Card>
+                  custName={customer.cust_name}
+                  email={customer.email}
+                  message={customer.testimonial}
+                />
               );
             })}
         </div>
