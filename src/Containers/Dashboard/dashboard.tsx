@@ -62,25 +62,11 @@ const Dashboard = () => {
     );
   }, [cipherText]);
 
-  const toLogout = () => {
-    navigate("/logout");
-  };
-
   return (
     <div className="h-100%">
       <NavigationBar />
-      <div>
-        <p className="font-serif text-xl subpixel-antialiased	font-extrabold tracking-wide mt-5">
-          Testimonials
-        </p>
-        <p className="text-black text-sm text-end mr-5 -mt-10">
-          <Button type="primary" size="small" onClick={toLogout}>
-            LOGOUT
-          </Button>
-        </p>
-      </div>
       {cipherText && (
-        <div>
+        <div className="mt-10">
           <span>Add New Testimonial Link: </span>
           <a href={`http://localhost:3000/getdata?cmp=${cipherText}`}>
             {`http://localhost:3000/getdata?cmp=${cipherText}`}
@@ -89,7 +75,7 @@ const Dashboard = () => {
       )}
 
       <div className="grid-rows-2">
-        <div className="h-100 grid grid-cols-4 gap-3 content-start p-10">
+        <div className="grid grid-cols-4 gap-3 content-start p-10">
           {customerDetails.data.length > 0 &&
             customerDetails.data.map((customer: any) => {
               console.log(customer);

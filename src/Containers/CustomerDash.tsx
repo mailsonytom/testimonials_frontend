@@ -4,6 +4,7 @@ import { useAuth } from "../Contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { Axios } from "../base";
 import { useLocation } from "react-router-dom";
+import TestimonialCard from "../Components/TestimonialCard";
 
 var CryptoJS = require("crypto-js");
 const secretKey = process.env.REACT_APP_MY_SECRET_KEY;
@@ -51,15 +52,22 @@ const CustomerDash = () => {
         {customerDetails.data.length > 0 &&
           customerDetails.data.map((customer: any) => {
             return (
-              <Card
+              <TestimonialCard
                 key={customer.cust_id}
                 className="font-medium tracking-tight text-start"
-                style={{ width: 300, backgroundColor: "#9bccbd" }}
-              >
-                <p>Name: {customer.cust_name}</p>
-                <p>Email: {customer.email}</p>
-                <p className="truncate">Message: {customer.testimonial}</p>
-              </Card>
+                custName={customer.cust_name}
+                email={customer.email}
+                message={customer.testimonial}
+              />
+              // <Card
+              //   key={customer.cust_id}
+              //   className="font-medium tracking-tight text-start"
+              //   style={{ width: 300, backgroundColor: "#9bccbd" }}
+              // >
+              //   <p>Name: {customer.cust_name}</p>
+              //   <p>Email: {customer.email}</p>
+              //   <p className="truncate">Message: {customer.testimonial}</p>
+              // </Card>
             );
           })}
       </div>
