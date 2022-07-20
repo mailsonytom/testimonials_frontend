@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Input, Button } from "antd";
+import { Input, Button, Upload } from "antd";
 import "antd/dist/antd.css";
 // import { useAuth } from "../Contexts/AuthContext";
 import { Axios } from "../base";
 import { useLocation } from "react-router-dom";
+import ImgCrop from "antd-img-crop";
+import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
+import { DataInput, DataTextArea } from "../Components/Input";
 
 const { TextArea } = Input;
 var CryptoJS = require("crypto-js");
@@ -13,6 +16,8 @@ type TestimonialPayload = {
   fullName: string;
   email: string;
   compId: string;
+  companyURL: string;
+  // avatar: string;
   text: string;
 };
 
@@ -22,6 +27,13 @@ const GetTestimonial = () => {
   const [compId, setcompId] = useState("");
   const [text, settext] = useState("");
   const [mount, setmount] = useState("initial");
+  const [companyURL, setcompanyURL] = useState("");
+  const [file, setFile] = useState<UploadFile[]>([]);
+
+  const onChangeImage: UploadProps["onChange"] = ({ fileList: newFile }) => {
+    setFile(newFile);
+    console.log(file);
+  };
 
   const location = useLocation();
 
@@ -50,6 +62,10 @@ const GetTestimonial = () => {
     setemail(e.target.value);
   };
 
+  const onChangeURL = (e: any) => {
+    setcompanyURL(e.target.value);
+  };
+
   const onChangeText = (e: any) => {
     settext(e.target.value);
   };
@@ -60,8 +76,10 @@ const GetTestimonial = () => {
       fullName,
       email,
       compId,
+      companyURL,
       text,
     };
+    // payload.avatar = file[0].name;
     if (payload.compId && payload.text) {
       Axios.post("/addtestimonial", payload)
         .then((response) => {
@@ -85,21 +103,37 @@ const GetTestimonial = () => {
     <header className="App-header">
       <div className="place-content-center bg-slate-200 p-10 rounded-md">
         <h3>Create Your Testimonial</h3>
-        <Input
-          placeholder="FullName"
-          className="p-5 rounded bg-black	"
-          onChange={onChangeFullName}
-        />
-        <Input
-          type="text"
-          placeholder="Email"
-          className="p-5 rounded bg-black	"
-          onChange={onChangeEmail}
-        />
-        <TextArea
+        <div className="grid grid-cols-4">
+          <div className="col-span-3">
+            <DataInput placeholder="Full Name" onChange={onChangeFullName} />
+            <DataInput
+              type="text"
+              placeholder="Email"
+              onChange={onChangeEmail}
+            />
+            <DataInput
+              type="text"
+              placeholder="Company URL"
+              onChange={onChangeURL}
+            />
+          </div>
+          <div className="col-span-1">
+            <ImgCrop rotate>
+              <Upload
+                // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                listType="picture-card"
+                fileList={file}
+                onChange={onChangeImage}
+                // onPreview={onPreviewImage}
+              >
+                {file.length < 1 && "Upload"}
+              </Upload>
+            </ImgCrop>
+          </div>
+        </div>
+        <DataTextArea
           rows={4}
           placeholder="Add your testimonial"
-          className="p-5 rounded bg-black"
           onChange={onChangeText}
         />
         <Button

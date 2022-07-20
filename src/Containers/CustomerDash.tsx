@@ -48,9 +48,9 @@ const CustomerDash = () => {
           Testimonials
         </p>
       </div>
-      <div className="h-max	grid grid-cols-4 gap-3 content-start p-6">
-        {customerDetails.data.length > 0 &&
-          customerDetails.data.map((customer: any) => {
+      {customerDetails.data && customerDetails.data.length > 0 ? (
+        <div className="h-max	grid grid-cols-4 gap-3 content-start p-6">
+          {customerDetails.data.map((customer: any) => {
             return (
               <TestimonialCard
                 key={customer.cust_id}
@@ -58,6 +58,7 @@ const CustomerDash = () => {
                 custName={customer.cust_name}
                 email={customer.email}
                 message={customer.testimonial}
+                cURL={customer.companyURL}
               />
               // <Card
               //   key={customer.cust_id}
@@ -70,7 +71,10 @@ const CustomerDash = () => {
               // </Card>
             );
           })}
-      </div>
+        </div>
+      ) : (
+        <h5 className="justify-self-center	m-10">No Testimonials To Show </h5>
+      )}
     </div>
   );
 };

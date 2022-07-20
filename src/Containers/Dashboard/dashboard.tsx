@@ -75,9 +75,9 @@ const Dashboard = () => {
       )}
 
       <div className="grid-rows-2">
-        <div className="grid grid-cols-4 gap-3 content-start p-10">
-          {customerDetails.data.length > 0 &&
-            customerDetails.data.map((customer: any) => {
+        {customerDetails.data && customerDetails.data.length > 0 ? (
+          <div className="grid grid-cols-4 gap-3 content-start p-10">
+            {customerDetails.data.map((customer: any) => {
               console.log(customer);
               return (
                 <TestimonialCard
@@ -86,10 +86,14 @@ const Dashboard = () => {
                   custName={customer.cust_name}
                   email={customer.email}
                   message={customer.testimonial}
+                  cURL={customer.companyURL}
                 />
               );
             })}
-        </div>
+          </div>
+        ) : (
+          <h5 className="justify-self-center	m-10">No Testimonials To Show </h5>
+        )}
         <div>
           {cipherText && (
             <div>

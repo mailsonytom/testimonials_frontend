@@ -4,6 +4,7 @@ import "antd/dist/antd.css";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../Contexts/AuthContext";
 import { Axios } from "../../base";
+import { DataInput } from "../../Components/Input";
 
 type LoginPayload = {
   username: string;
@@ -91,12 +92,12 @@ const Login = () => {
           </span>
         </div>
         <div className="col-span-1 bg-slate-200 p-10 rounded-md">
-          <Input
+          <DataInput
             placeholder="Username"
             className="p-5 rounded bg-black	"
             onChange={onUsernameChange}
           />
-          <Input
+          <DataInput
             type="password"
             placeholder="Password"
             className="p-5 rounded bg-black	"

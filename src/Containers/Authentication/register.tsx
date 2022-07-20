@@ -5,12 +5,19 @@ import { useNavigate } from "react-router-dom";
 import { createNewUser } from "./api";
 import { useAuth } from "../../Contexts/AuthContext";
 import { Axios } from "../../base";
+import { DataInput } from "../../Components/Input";
 
-type RegisterPayload = {
+type RegisterUserPayload = {
   fullName: string;
   cmpName: string;
   username: string;
   password?: string;
+};
+
+type RegisterOrgPayload = {
+  companyName: string;
+  companyEmail: string;
+  companyURL?: string;
 };
 
 const Register = () => {
@@ -20,6 +27,10 @@ const Register = () => {
   const [cmpName, setcmpName] = useState("");
   const [username, setusername] = useState("");
   const [password, setpassword] = useState("");
+  const [isUser, setisUser] = useState(true);
+  const [companyName, setcompanyName] = useState("");
+  const [companyEmail, setcompanyEmail] = useState("");
+  const [companyURL, setcompanyURL] = useState("");
 
   const toLogin = () => {
     return navigate("/login");
@@ -41,33 +52,76 @@ const Register = () => {
     setpassword(e.target.value);
   };
 
+  const makeOrg = (e: any) => {
+    setisUser(false);
+  };
+
+  const makeUser = (e: any) => {
+    setisUser(true);
+  };
+
+  const changeCompanyName = (e: any) => {
+    setcompanyName(e.target.value);
+  };
+
+  const changeCompanyEmail = (e: any) => {
+    setcompanyEmail(e.target.value);
+  };
+
+  const changeCompanyUrl = (e: any) => {
+    setcompanyURL(e.target.value);
+  };
+
   const successAlert = () => {
     return alert("Registration successfull");
   };
 
   const registerUser = () => {
-    const payload: RegisterPayload = {
-      fullName,
-      cmpName,
-      username,
-      password,
-    };
-    Axios.post("/register", payload)
-      .then((response) => {
-        console.log("register response::", response.data);
-        if (response.data.msg === "User registered") {
-          successAlert();
-          setTimeout(() => {
-            navigate("/login");
-          }, 2000);
-        }
-      })
-      .catch((err) => {
-        console.log(
-          err || err.response
-          // || "Unable to login. Check your credentials."
-        );
-      });
+    if (isUser === true) {
+      const payload: RegisterUserPayload = {
+        fullName,
+        cmpName,
+        username,
+        password,
+      };
+      Axios.post("/register", payload)
+        .then((response) => {
+          if (response.data.msg === "User registered") {
+            successAlert();
+            setTimeout(() => {
+              navigate("/login");
+            }, 2000);
+          }
+        })
+        .catch((err) => {
+          console.log(
+            err || err.response
+            // || "Unable to login. Check your credentials."
+          );
+        });
+    }
+    if (isUser === false) {
+      const payload: RegisterOrgPayload = {
+        companyName,
+        companyEmail,
+        companyURL,
+      };
+      Axios.post("/registerOrg", payload)
+        .then((response) => {
+          if (response.data.msg === "Company registered") {
+            successAlert();
+            setTimeout(() => {
+              navigate("/login");
+            }, 2000);
+          }
+        })
+        .catch((err) => {
+          console.log(
+            err || err.response
+            // || "Unable to login. Check your credentials."
+          );
+        });
+    }
   };
 
   return (
@@ -87,33 +141,75 @@ const Register = () => {
           </span>
         </div>
         <div className="col-span-1 bg-slate-200 p-10 rounded-md mr-16">
-          <Input
-            placeholder="Full Name"
-            className="p-5 rounded bg-black"
-            onChange={changeFullName}
-          />
-          <Input
-            placeholder="Company Name"
-            className="p-5 rounded bg-black"
-            onChange={changeCmpName}
-          />
-          <Input
-            placeholder="Username"
-            className="p-5 rounded bg-black"
-            onChange={changeUsername}
-          />
-          <Input
-            type="password"
-            placeholder="Password"
-            className="p-5 rounded bg-black"
-            onChange={changePassword}
-          />
+          <h5>
+            <Button
+              type="link"
+              size="large"
+              onClick={makeUser}
+              disabled={isUser ? true : false}
+            >
+              INDIVIDUAL
+            </Button>
+            |
+            <Button
+              type="link"
+              size="large"
+              onClick={makeOrg}
+              disabled={isUser ? false : true}
+            >
+              ORGANIZATION
+            </Button>
+          </h5>
+          {isUser === true ? (
+            <div>
+              <DataInput
+                placeholder="Full Name"
+                className="p-5 rounded bg-black"
+                onChange={changeFullName}
+              />
+              <DataInput
+                placeholder="Company Name"
+                className="p-5 rounded bg-black"
+                onChange={changeCmpName}
+              />
+              <DataInput
+                placeholder="Username"
+                className="p-5 rounded bg-black"
+                onChange={changeUsername}
+              />
+              <DataInput
+                type="password"
+                placeholder="Password"
+                className="p-5 rounded bg-black"
+                onChange={changePassword}
+              />
+            </div>
+          ) : (
+            <div>
+              <DataInput
+                placeholder="Company Name"
+                className="p-5 rounded bg-black"
+                onChange={changeCompanyName}
+              />
+              <DataInput
+                placeholder="Company Email"
+                className="p-5 rounded bg-black"
+                onChange={changeCompanyEmail}
+              />
+              <DataInput
+                type="text"
+                placeholder="Company URL"
+                className="p-5 rounded bg-black"
+                onChange={changeCompanyUrl}
+              />
+            </div>
+          )}
           <Button
             block
             type="primary"
             shape="round"
             size="middle"
-            className="mt-6"
+            className="mt-4"
             onClick={registerUser}
           >
             REGISTER

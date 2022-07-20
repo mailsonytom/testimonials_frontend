@@ -19,6 +19,10 @@ const TestimonialCard = styled((props: any) => (
             <span className="font-bold">{props.custName}</span>
             <br />
             <span className="font-light">{props.email}</span>
+            <br />
+            <span className="font-light">
+              <a href={props.cURL}>{props.cURL}</a>
+            </span>
           </div>
           <div className="justify-self-end mr-1 mt-2">
             <img
