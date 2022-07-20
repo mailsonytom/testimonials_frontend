@@ -41,7 +41,6 @@ const TestimonialCard = styled((props: any) => (
   background: #ffffff;
   height: 100%;
   border-radius: 10px;
-  border: 2px solid #4fdb9c;
   box-shadow: 5px 5px 3px #f0f5f5;
   .ant-card-body {
     min-height: 150px;
