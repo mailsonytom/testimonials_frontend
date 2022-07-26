@@ -24,14 +24,14 @@ const TestimonialCard = styled((props: any) => (
               <a href={props.cURL}>{props.cURL}</a>
             </span>
           </div>
-          <div className="justify-self-end mr-1 mt-2">
+          {/* <div className="justify-self-end mr-1 mt-2">
             <img
               // onClick={showOptions}
               src={ProfileImage}
               alt="img"
               className="w-10 h-10 rounded-full	bg-white justify-self-end border-yellow-500	cursor-pointer"
             />
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

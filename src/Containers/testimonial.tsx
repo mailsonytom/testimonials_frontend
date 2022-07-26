@@ -4,8 +4,8 @@ import "antd/dist/antd.css";
 // import { useAuth } from "../Contexts/AuthContext";
 import { Axios } from "../base";
 import { useLocation } from "react-router-dom";
-import ImgCrop from "antd-img-crop";
-import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
+// import ImgCrop from "antd-img-crop";
+// import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
 import { DataInput, DataTextArea } from "../Components/Input";
 
 const { TextArea } = Input;
@@ -28,12 +28,12 @@ const GetTestimonial = () => {
   const [text, settext] = useState("");
   const [mount, setmount] = useState("initial");
   const [companyURL, setcompanyURL] = useState("");
-  const [file, setFile] = useState<UploadFile[]>([]);
+  // const [file, setFile] = useState<UploadFile[]>([]);
 
-  const onChangeImage: UploadProps["onChange"] = ({ fileList: newFile }) => {
-    setFile(newFile);
-    console.log(file);
-  };
+  // const onChangeImage: UploadProps["onChange"] = ({ fileList: newFile }) => {
+  //   setFile(newFile);
+  //   console.log(file);
+  // };
 
   const location = useLocation();
 
@@ -103,21 +103,14 @@ const GetTestimonial = () => {
     <header className="App-header">
       <div className="place-content-center bg-slate-200 p-10 rounded-md">
         <h3>Create Your Testimonial</h3>
-        <div className="grid grid-cols-4">
-          <div className="col-span-3">
-            <DataInput placeholder="Full Name" onChange={onChangeFullName} />
-            <DataInput
-              type="text"
-              placeholder="Email"
-              onChange={onChangeEmail}
-            />
-            <DataInput
-              type="text"
-              placeholder="Company URL"
-              onChange={onChangeURL}
-            />
-          </div>
-          <div className="col-span-1">
+        <DataInput placeholder="Full Name" onChange={onChangeFullName} />
+        <DataInput type="text" placeholder="Email" onChange={onChangeEmail} />
+        <DataInput
+          type="text"
+          placeholder="Company URL"
+          onChange={onChangeURL}
+        />
+        {/* <div className="col-span-1">
             <ImgCrop rotate>
               <Upload
                 // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
@@ -129,8 +122,8 @@ const GetTestimonial = () => {
                 {file.length < 1 && "Upload"}
               </Upload>
             </ImgCrop>
-          </div>
-        </div>
+          </div> */}
+
         <DataTextArea
           rows={4}
           placeholder="Add your testimonial"
