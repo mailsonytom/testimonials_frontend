@@ -91,7 +91,10 @@ const Login = () => {
             TESTIMONIALS
           </span>
         </div>
-        <div className="col-span-1 bg-slate-200 p-10 rounded-md">
+        <div
+          className="col-span-1  p-10 rounded-md"
+          style={{ backgroundColor: "#282c34" }}
+        >
           <DataInput
             placeholder="Username"
             className="p-5 rounded bg-black	"
@@ -106,14 +109,14 @@ const Login = () => {
           <Button
             block
             type="primary"
-            shape="round"
+            // shape="round"
             size="middle"
-            className="mt-6"
+            className="mt-4"
             onClick={onLogin}
           >
             LOGIN
           </Button>
-          <p className="text-black text-sm text-start">
+          <p className=" text-sm text-start text-red-300">
             Not a user?{" "}
             <Button type="link" size="small" onClick={toRegister}>
               Register

@@ -66,8 +66,10 @@ const Dashboard = () => {
     <div className="h-100%">
       <NavigationBar />
       {cipherText && (
-        <div className="mt-10">
-          <span>Add New Testimonial Link: </span>
+        <div className="mt-10 px-6">
+          <span>
+            Create your love <br />
+          </span>
           <a href={`http://localhost:3000/getdata?cmp=${cipherText}`}>
             {`http://localhost:3000/getdata?cmp=${cipherText}`}
           </a>
@@ -76,13 +78,12 @@ const Dashboard = () => {
 
       <div className="grid-rows-2">
         {customerDetails.data && customerDetails.data.length > 0 ? (
-          <div className="grid grid-cols-4 gap-3 content-start p-10">
+          <div className="grid grid-cols-3 gap-3 content-start p-10">
             {customerDetails.data.map((customer: any) => {
-              console.log(customer);
+              // console.log(customer);
               return (
                 <TestimonialCard
                   key={customer.cust_id}
-                  className="font-medium tracking-tight text-start"
                   custName={customer.cust_name}
                   email={customer.email}
                   message={customer.testimonial}
@@ -92,7 +93,7 @@ const Dashboard = () => {
             })}
           </div>
         ) : (
-          <h5 className="justify-self-center	m-10">No Testimonials To Show </h5>
+          <h5 className="justify-self-center m-10">No Testimonials To Show </h5>
         )}
         <div>
           {cipherText && (

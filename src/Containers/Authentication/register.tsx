@@ -140,9 +140,13 @@ const Register = () => {
             TESTIMONIALS
           </span>
         </div>
-        <div className="col-span-1 bg-slate-200 p-10 rounded-md mr-16">
-          <h5>
+        <div
+          className="col-span-1 p-10 rounded-md mr-16"
+          style={{ backgroundColor: "#282c34" }}
+        >
+          <h5 className="text-red-300">
             <Button
+              className="text-red-300"
               type="link"
               size="large"
               onClick={makeUser}
@@ -207,14 +211,14 @@ const Register = () => {
           <Button
             block
             type="primary"
-            shape="round"
+            // shape="round"
             size="middle"
             className="mt-4"
             onClick={registerUser}
           >
             REGISTER
           </Button>
-          <p className="text-black text-sm text-start">
+          <p className="text-red-300 text-sm text-start">
             Already a user?{" "}
             <Button type="link" size="small" onClick={toLogin}>
               Login

@@ -54,7 +54,6 @@ const CustomerDash = () => {
             return (
               <TestimonialCard
                 key={customer.cust_id}
-                className="font-medium tracking-tight text-start"
                 custName={customer.cust_name}
                 email={customer.email}
                 message={customer.testimonial}
