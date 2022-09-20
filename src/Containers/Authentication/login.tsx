@@ -14,6 +14,7 @@ type LoginPayload = {
 const Login = () => {
   const [username, setusername] = useState("");
   const [password, setpassword] = useState("");
+  const [usernameErr, setusernameErr] = useState("");
 
   const {
     state: { accessToken },
@@ -21,6 +22,26 @@ const Login = () => {
   } = useAuth();
 
   const navigate = useNavigate();
+
+  const validator = (intype: string, value: any) => {
+    if (intype === "Username") {
+      console.log("Username", value);
+      if(value !== ""){
+        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)) {
+          return true;
+        }
+        else{
+          setusernameErr("")
+        }
+      }else{
+        setusernameErr("Enter username")
+      }
+      
+    }
+    if (intype === "Password") {
+      console.log("Password", value);
+    }
+  };
 
   useEffect(() => {
     if (accessToken) {
@@ -34,10 +55,14 @@ const Login = () => {
 
   const onUsernameChange = (e: any) => {
     setusername(e.target.value);
+    // console.log(e.target.placeholder);
+    validator(e.target.placeholder, e.target.value);
   };
 
   const onPasswordChange = (e: any) => {
     setpassword(e.target.value);
+    // console.log(e.target.placeholder);
+    validator(e.target.placeholder, e.target.value);
   };
 
   const onLogin = () => {
@@ -45,34 +70,34 @@ const Login = () => {
       username,
       password,
     };
-    Axios.post("/login", payload)
-      .then((response) => {
-        console.log("login response::", response.data);
-        if (response.data.data) {
-          const { accessToken, user_id, user_name, username, cmpName, cmpId } =
-            response.data.data;
-          localStorage.setItem("TOKEN", accessToken);
-          localStorage.setItem("CMP_id", cmpId);
-          dispatch({
-            type: "setUser",
-            payload: {
-              accessToken,
-              user_id,
-              user_name,
-              username,
-              cmpName,
-              cmpId,
-            },
-          });
-          navigate("/dashboard");
-        }
-      })
-      .catch((err) => {
-        console.log(
-          err || err.response
-          // || "Unable to login. Check your credentials."
-        );
-      });
+    // Axios.post("/login", payload)
+    //   .then((response) => {
+    //     console.log("login response::", response.data);
+    //     if (response.data.data) {
+    //       const { accessToken, user_id, user_name, username, cmpName, cmpId } =
+    //         response.data.data;
+    //       localStorage.setItem("TOKEN", accessToken);
+    //       localStorage.setItem("CMP_id", cmpId);
+    //       dispatch({
+    //         type: "setUser",
+    //         payload: {
+    //           accessToken,
+    //           user_id,
+    //           user_name,
+    //           username,
+    //           cmpName,
+    //           cmpId,
+    //         },
+    //       });
+    //       navigate("/dashboard");
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     console.log(
+    //       err || err.response
+    //       // || "Unable to login. Check your credentials."
+    //     );
+    //   });
   };
 
   return (
