@@ -25,7 +25,7 @@ const Login = () => {
 
   const validator = (intype: string, value: any) => {
     if (intype === "Username") {
-      console.log("Username", value);
+      // console.log("Username", value);
       if(value !== ""){
         if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)) {
           return true;
@@ -39,7 +39,7 @@ const Login = () => {
       
     }
     if (intype === "Password") {
-      console.log("Password", value);
+      // console.log("Password", value);
     }
   };
 
@@ -70,34 +70,34 @@ const Login = () => {
       username,
       password,
     };
-    // Axios.post("/login", payload)
-    //   .then((response) => {
-    //     console.log("login response::", response.data);
-    //     if (response.data.data) {
-    //       const { accessToken, user_id, user_name, username, cmpName, cmpId } =
-    //         response.data.data;
-    //       localStorage.setItem("TOKEN", accessToken);
-    //       localStorage.setItem("CMP_id", cmpId);
-    //       dispatch({
-    //         type: "setUser",
-    //         payload: {
-    //           accessToken,
-    //           user_id,
-    //           user_name,
-    //           username,
-    //           cmpName,
-    //           cmpId,
-    //         },
-    //       });
-    //       navigate("/dashboard");
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log(
-    //       err || err.response
-    //       // || "Unable to login. Check your credentials."
-    //     );
-    //   });
+    Axios.post("/login", payload)
+      .then((response) => {
+        console.log("login response::", response.data);
+        if (response.data.data) {
+          const { accessToken, user_id, user_name, username, cmpName, cmpId } =
+            response.data.data;
+          localStorage.setItem("TOKEN", accessToken);
+          localStorage.setItem("CMP_id", cmpId);
+          dispatch({
+            type: "setUser",
+            payload: {
+              accessToken,
+              user_id,
+              user_name,
+              username,
+              cmpName,
+              cmpId,
+            },
+          });
+          navigate("/dashboard");
+        }
+      })
+      .catch((err) => {
+        console.log(
+          err || err.response
+          // || "Unable to login. Check your credentials."
+        );
+      });
   };
 
   return (
