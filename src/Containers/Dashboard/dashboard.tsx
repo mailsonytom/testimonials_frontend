@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Card } from "antd";
 import { useAuth } from "../../Contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { Axios } from "../../base";
-import { Input, Button } from "antd";
 import "antd/dist/antd.css";
 import CodeEditor from "@uiw/react-textarea-code-editor";
 import NavigationBar from "../Navigation";
@@ -13,9 +11,7 @@ var CryptoJS = require("crypto-js");
 const secretKey = process.env.REACT_APP_MY_SECRET_KEY;
 
 const Dashboard = () => {
-  const [initial, setinitial] = useState("");
-  const [myDatas, setmyDatas] = useState<any[]>([]);
-  const [company, setcompany] = useState("");
+  const [, setcompany] = useState("");
   const [customerDetails, setcustomerDetails] = useState<{
     data: string[];
   }>(() => ({
@@ -27,7 +23,6 @@ const Dashboard = () => {
 
   const {
     state: { accessToken, cmpId },
-    dispatch,
   } = useAuth();
 
   const navigate = useNavigate();
@@ -51,7 +46,7 @@ const Dashboard = () => {
         CryptoJS.AES.encrypt(JSON.stringify(Comp_id), secretKey).toString()
       );
     }
-  }, []);
+  }, [accessToken, navigate, cmpId]);
 
   useEffect(() => {
     setCode(

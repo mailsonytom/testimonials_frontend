@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import { Input, Button, Alert } from "antd";
+import { Button } from "antd";
 import "antd/dist/antd.css";
 import { useNavigate } from "react-router-dom";
-import { createNewUser } from "./api";
-import { useAuth } from "../../Contexts/AuthContext";
 import { Axios } from "../../base";
 import { DataInput } from "../../Components/Input";
 
