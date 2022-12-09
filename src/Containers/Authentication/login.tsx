@@ -26,17 +26,15 @@ const Login = () => {
   const validator = (intype: string, value: any) => {
     if (intype === "Username") {
       // console.log("Username", value);
-      if(value !== ""){
+      if (value !== "") {
         if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)) {
           return true;
+        } else {
+          setusernameErr("");
         }
-        else{
-          setusernameErr("")
-        }
-      }else{
-        setusernameErr("Enter username")
+      } else {
+        setusernameErr("Enter username");
       }
-      
     }
     if (intype === "Password") {
       // console.log("Password", value);
@@ -70,7 +68,11 @@ const Login = () => {
       username,
       password,
     };
-    Axios.post("/login", payload)
+    var Headers = {
+      "Access-Control-Allow-Origin": '*',
+      "Content-Type": "application/json",
+    };
+    Axios.post("/login", payload, { headers: Headers })
       .then((response) => {
         console.log("login response::", response.data);
         if (response.data.data) {
