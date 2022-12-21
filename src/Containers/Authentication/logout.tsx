@@ -8,7 +8,7 @@ const Logout = () => {
   useEffect(() => {
     localStorage.removeItem("TOKEN");
     localStorage.removeItem("CMP_id");
-    window.location.reload();
+    // window.location.reload();
     navigate("/login");
   }, []);
 
