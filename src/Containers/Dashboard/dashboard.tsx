@@ -9,6 +9,7 @@ import TestimonialCard from "../../Components/TestimonialCard";
 
 var CryptoJS = require("crypto-js");
 const secretKey = process.env.REACT_APP_MY_SECRET_KEY;
+const backendURL = process.env.REACT_APP_BACKEND;
 
 const Dashboard = () => {
   const [, setcompany] = useState("");
@@ -52,7 +53,7 @@ const Dashboard = () => {
     setCode(
       `<script src="/js/iframeResizer.min.js"></script>
 <iframe style="width: 100%; position: absolute; height: 100%; border: none;" id="testimonialIframe"
-        src="http://localhost:3000/wall-of-love?cmp=${cipherText}"></iframe>
+        src="${backendURL}/wall-of-love?cmp=${cipherText}"></iframe>
 <script> iFrameResize({ log: true }, "#testimonialIframe"); </script>`
     );
   }, [cipherText]);
@@ -65,8 +66,8 @@ const Dashboard = () => {
           <span>
             Create your love <br />
           </span>
-          <a href={`http://localhost:3000/getdata?cmp=${cipherText}`}>
-            {`http://localhost:3000/getdata?cmp=${cipherText}`}
+          <a href={`${backendURL}getdata?cmp=${cipherText}`}>
+            {`${backendURL}getdata?cmp=${cipherText}`}
           </a>
         </div>
       )}
