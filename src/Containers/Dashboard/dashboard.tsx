@@ -72,7 +72,7 @@ const Dashboard = () => {
         </div>
       )}
 
-      <div className="grid-rows-2">
+      <div className="grid-rows-2 h-screen">
         {customerDetails.data && customerDetails.data.length > 0 ? (
           <div className="grid grid-cols-3 gap-3 content-start p-10">
             {customerDetails.data.map((customer: any) => {
@@ -89,7 +89,7 @@ const Dashboard = () => {
             })}
           </div>
         ) : (
-          <h5 className="justify-self-center m-10">No Testimonials To Show </h5>
+          <h5 className="justify-self-center m-10 h-60 text-white">No Testimonials To Show </h5>
         )}
         <div>
           {cipherText && (
