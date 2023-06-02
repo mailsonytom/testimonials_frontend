@@ -13,8 +13,7 @@ const Logout = () => {
   }, []);
 
   // useEffect(() => {}, [navigate]);
-
-  return <span>Loggin Out</span>;
+  return <p>Logging out</p>;
 };
 
 export default Logout;

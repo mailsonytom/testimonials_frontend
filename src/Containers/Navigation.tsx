@@ -8,7 +8,6 @@ const NavigationBar = () => {
   const navigate = useNavigate();
 
   const handleMenuClick: MenuProps["onClick"] = (e) => {
-    console.log("click", e);
     if (e.key === "0") {
       navigate("/logout");
     }
@@ -18,15 +17,15 @@ const NavigationBar = () => {
     <Menu
       onClick={handleMenuClick}
       items={[
+        // {
+        //   label: <h4>Account Settings</h4>,
+        //   key: "1",
+        // },
+        // {
+        //   type: "divider",
+        // },
         {
-          label: <h4>Account Settings</h4>,
-          key: "1",
-        },
-        {
-          type: "divider",
-        },
-        {
-          label: <h4>Logout</h4>,
+          label: <h4 className="text-red-950 font-bold p-1">LOGOUT</h4>,
           key: "0",
         },
       ]}

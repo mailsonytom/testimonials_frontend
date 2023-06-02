@@ -18,6 +18,7 @@ const Dashboard = () => {
   }>(() => ({
     data: [],
   }));
+  const [copiedText, setCopiedText] = useState("");
 
   const [cipherText, setcipherText] = useState("");
   const [code, setCode] = React.useState("");
@@ -58,6 +59,22 @@ const Dashboard = () => {
     );
   }, [cipherText]);
 
+  const handleCopyClick = (event: React.MouseEvent<HTMLParagraphElement>) => {
+    const range = document.createRange();
+    range.selectNode(event.currentTarget);
+
+    const selection = window.getSelection();
+    if (selection) {
+      selection.removeAllRanges();
+      selection.addRange(range);
+
+      document.execCommand("copy");
+      selection.removeAllRanges();
+    }
+
+    alert("Copied to clipboard");
+  };
+
   return (
     <div className="h-100%">
       <NavigationBar />
@@ -66,9 +83,10 @@ const Dashboard = () => {
           <span>
             Create your love <br />
           </span>
-          <a href={`${backendURL}getdata?cmp=${cipherText}`}>
-            {`${backendURL}getdata?cmp=${cipherText}`}
-          </a>
+          <p
+            className="text-sky-600"
+            onClick={handleCopyClick}
+          >{`${backendURL}getdata?cmp=${cipherText}`}</p>
         </div>
       )}
 
@@ -76,7 +94,6 @@ const Dashboard = () => {
         {customerDetails.data && customerDetails.data.length > 0 ? (
           <div className="grid grid-cols-3 gap-3 content-start p-10">
             {customerDetails.data.map((customer: any) => {
-              // console.log(customer);
               return (
                 <TestimonialCard
                   key={customer.cust_id}
@@ -89,7 +106,9 @@ const Dashboard = () => {
             })}
           </div>
         ) : (
-          <h5 className="justify-self-center m-10 h-60 text-white">No Testimonials To Show </h5>
+          <h5 className="justify-self-center m-10 h-60 text-white">
+            No Testimonials To Show{" "}
+          </h5>
         )}
         <div>
           {cipherText && (

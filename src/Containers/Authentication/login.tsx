@@ -25,7 +25,6 @@ const Login = () => {
 
   const validator = (intype: string, value: any) => {
     if (intype === "Username") {
-      // console.log("Username", value);
       if (value !== "") {
         if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)) {
           return true;
@@ -42,10 +41,11 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (accessToken) {
+    const accesstoken = localStorage.getItem('TOKEN');
+    if (accesstoken) {
       navigate("/dashboard");
     }
-  }, [dispatch]);
+  }, [navigate]);
 
   const toRegister = () => {
     navigate("/register");
@@ -53,13 +53,11 @@ const Login = () => {
 
   const onUsernameChange = (e: any) => {
     setusername(e.target.value);
-    // console.log(e.target.placeholder);
     validator(e.target.placeholder, e.target.value);
   };
 
   const onPasswordChange = (e: any) => {
     setpassword(e.target.value);
-    // console.log(e.target.placeholder);
     validator(e.target.placeholder, e.target.value);
   };
 
@@ -74,7 +72,6 @@ const Login = () => {
     };
     Axios.post("/login", payload, { headers: Headers })
       .then((response) => {
-        console.log("login response::", response.data);
         if (response.data.data) {
           const { accessToken, user_id, user_name, username, cmpName, cmpId } =
             response.data.data;
@@ -92,6 +89,8 @@ const Login = () => {
             },
           });
           navigate("/dashboard");
+        } else {
+          return alert(response.data.msg);
         }
       })
       .catch((err) => {

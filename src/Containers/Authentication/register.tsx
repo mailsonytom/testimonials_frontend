@@ -41,14 +41,6 @@ const Register = () => {
     setpassword(e.target.value);
   };
 
-  const makeOrg = (e: any) => {
-    setisUser(false);
-  };
-
-  const makeUser = (e: any) => {
-    setisUser(true);
-  };
-
   const successAlert = () => {
     return alert("Registration successfull");
   };
