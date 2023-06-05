@@ -56,7 +56,7 @@ const Dashboard = () => {
     setCode(
       `<script src="/js/iframeResizer.min.js"></script>
 <iframe style="width: 100%; position: absolute; height: 100%; border: none;" id="testimonialIframe"
-        src="${backendURL}/wall-of-love?c=${cipherText}"></iframe>
+        src="${backendURL}/wall-of-love?cp=${cipherText}"></iframe>
 <script> iFrameResize({ log: true }, "#testimonialIframe"); </script>`
     );
   }, [cipherText]);
@@ -103,7 +103,7 @@ const Dashboard = () => {
           <p
             className="text-sky-600 cursor-pointer"
             onClick={handleCopyClick}
-          >{`${backendURL}getdata?c=${cipherText}`}</p>
+          >{`${backendURL}getdata?cp=${cipherText}`}</p>
         </div>
       )}
 

@@ -38,7 +38,7 @@ const GetTestimonial = () => {
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
-    const id = urlParams.get("cmp");
+    const id = urlParams.get("cp");
     const NewId = id && id.replaceAll(" ", "+");
     var bytesData =
       NewId &&
@@ -104,10 +104,10 @@ const GetTestimonial = () => {
     });
   };
 
-  const errorAlert = () => {
+  const errorAlert = (errorData: any) => {
     messageApi.open({
       type: "error",
-      content: "Please fill the details correctly",
+      content: errorData,
       className: "custom-class",
       style: {
         textAlign: "right",
@@ -144,11 +144,11 @@ const GetTestimonial = () => {
             );
           });
       } else {
-        console.log("Something wrong!!");
+        errorAlert("Something went wrong!");
       }
     } else {
       setErrors(errors);
-      errorAlert();
+      errorAlert("Please fill the details correctly");
     }
   };
 
