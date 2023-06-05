@@ -34,9 +34,7 @@ const NavigationBar = () => {
 
   return (
     <div className="grid grid-cols-2 text-slate-200 p-3">
-      <span className="font-serif text-xl subpixel-antialiased	font-extrabold tracking-wide justify-self-start mt-1 ml-10">
-        Testimonials
-      </span>
+      <span className="justify-self-start mt-3 ml-8 text-2xl tracking-wide">USERLOVE</span>
       <div className="justify-self-end mr-10">
         <DropOption overlay={menu} trigger={["click"]}>
           <img

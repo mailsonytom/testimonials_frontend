@@ -6,6 +6,7 @@ import "antd/dist/antd.css";
 import CodeEditor from "@uiw/react-textarea-code-editor";
 import NavigationBar from "../Navigation";
 import TestimonialCard from "../../Components/TestimonialCard";
+import { message } from "antd";
 
 var CryptoJS = require("crypto-js");
 const secretKey = process.env.REACT_APP_MY_SECRET_KEY;
@@ -22,6 +23,7 @@ const Dashboard = () => {
 
   const [cipherText, setcipherText] = useState("");
   const [code, setCode] = React.useState("");
+  const [messageApi, contextHolder] = message.useMessage();
 
   const {
     state: { accessToken, cmpId },
@@ -59,6 +61,21 @@ const Dashboard = () => {
     );
   }, [cipherText]);
 
+  const successAlert = () => {
+    messageApi.open({
+      type: "success",
+      content: "Copied to clipboard",
+      className: "custom-class",
+      style: {
+        textAlign: "center",
+        marginTop: "2vh",
+        marginRight: "2vh",
+      },
+      duration: 2,
+    });
+    navigate("/dashboard");
+  };
+
   const handleCopyClick = (event: React.MouseEvent<HTMLParagraphElement>) => {
     const range = document.createRange();
     range.selectNode(event.currentTarget);
@@ -71,26 +88,26 @@ const Dashboard = () => {
       document.execCommand("copy");
       selection.removeAllRanges();
     }
-
-    alert("Copied to clipboard");
+    successAlert();
   };
 
   return (
-    <div className="h-100%">
+    <div className="h-full">
+      {contextHolder}
       <NavigationBar />
       {cipherText && (
-        <div className="mt-10 px-6">
+        <div className="mt-10 px-6 text-center">
           <span>
-            Create your love <br />
+            Collect your user's love <br />
           </span>
           <p
-            className="text-sky-600"
+            className="text-sky-600 cursor-pointer"
             onClick={handleCopyClick}
           >{`${backendURL}getdata?cmp=${cipherText}`}</p>
         </div>
       )}
 
-      <div className="grid-rows-2 h-screen">
+      <div className="grid-rows-2">
         {customerDetails.data && customerDetails.data.length > 0 ? (
           <div className="grid grid-cols-3 gap-3 content-start p-10">
             {customerDetails.data.map((customer: any) => {
@@ -114,13 +131,13 @@ const Dashboard = () => {
           {cipherText && (
             <div>
               <h4
-                className="ml-8 mr-8 py-2"
+                className="ml-8 mr-8 p-2"
                 style={{
                   backgroundColor: "#272b2b",
                   color: "whitesmoke",
                 }}
               >
-                ADD THIS SCRIPT TO YOUR PAGE
+                EMBED A WALL OF USER LOVE
               </h4>
               <CodeEditor
                 value={code}

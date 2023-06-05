@@ -44,8 +44,8 @@ const CustomerDash = () => {
   return (
     <div>
       <div>
-        <p className="font-serif text-xl subpixel-antialiased	font-extrabold tracking-wide mt-5">
-          Testimonials
+        <p className="tracking-wide mt-3 ml-8 text-2xl">
+          USERLOVE
         </p>
       </div>
       {customerDetails.data && customerDetails.data.length > 0 ? (

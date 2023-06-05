@@ -1,9 +1,9 @@
 .App {
-  text-align: center;
   background-color: #151719;
   color: rgb(229 231 235);
   padding-left: 3%;
   padding-right: 3%;
+  font-family: 'Roboto', sans-serif;
 }
 
 .App-logo {

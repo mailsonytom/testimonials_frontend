@@ -24,9 +24,11 @@ const TestimonialCard = styled((props: any) => (
             {props.email}
           </span>
           <br />
-          <span className="font-light">
-            <a href={props.cURL}>{props.cURL}</a>
-          </span>
+          {props.cURL && (
+            <span className="font-light">
+              <a href={props.cURL}>{props.cURL}</a>
+            </span>
+          )}
         </div>
       </div>
       <div className="row-span-2 text-md text-gray-200 flex-grow mt-2 p-2 tracking-normal">
