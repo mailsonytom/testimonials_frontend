@@ -23,7 +23,7 @@ const CustomerDash = () => {
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
-    const id = urlParams.get("cmp");
+    const id = urlParams.get("c");
     const NewId = id && id.replaceAll(" ", "+");
     var bytesData =
       NewId &&

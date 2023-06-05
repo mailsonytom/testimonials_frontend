@@ -56,7 +56,7 @@ const Dashboard = () => {
     setCode(
       `<script src="/js/iframeResizer.min.js"></script>
 <iframe style="width: 100%; position: absolute; height: 100%; border: none;" id="testimonialIframe"
-        src="${backendURL}/wall-of-love?cmp=${cipherText}"></iframe>
+        src="${backendURL}/wall-of-love?c=${cipherText}"></iframe>
 <script> iFrameResize({ log: true }, "#testimonialIframe"); </script>`
     );
   }, [cipherText]);
@@ -103,7 +103,7 @@ const Dashboard = () => {
           <p
             className="text-sky-600 cursor-pointer"
             onClick={handleCopyClick}
-          >{`${backendURL}getdata?cmp=${cipherText}`}</p>
+          >{`${backendURL}getdata?c=${cipherText}`}</p>
         </div>
       )}
 
@@ -123,7 +123,7 @@ const Dashboard = () => {
             })}
           </div>
         ) : (
-          <h5 className="justify-self-center m-10 h-60 text-white">
+          <h5 className="justify-self-center text-center m-10 h-60 text-white">
             No Testimonials To Show{" "}
           </h5>
         )}
