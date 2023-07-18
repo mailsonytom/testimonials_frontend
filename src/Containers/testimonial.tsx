@@ -4,6 +4,7 @@ import "antd/dist/antd.css";
 import { Axios } from "../base";
 import { useLocation } from "react-router-dom";
 import { DataInput, DataTextArea } from "../Components/Input";
+import TestimonialCard from "../Components/TestimonialCard";
 
 const { TextArea } = Input;
 var CryptoJS = require("crypto-js");
@@ -154,49 +155,79 @@ const GetTestimonial = () => {
 
   return (
     <header className="App-header">
-      <div
-        className="place-content-center bg-slate-200 p-10 rounded-md w-3/5"
-        style={{ backgroundColor: "#282c34" }}
-      >
-        <h3 className="text-white text-center">Portray Your Love</h3>
-        <DataInput placeholder="Full Name" onChange={onChangeFullName} />
-        {errors.fullName && (
-          <span className="text-red-600 text-sm	text-left p-1">
-            {errors.fullName}
-          </span>
-        )}
-        <DataInput type="text" placeholder="Email" onChange={onChangeEmail} />
-        {errors.email && (
-          <span className="text-red-600 text-sm	text-left p-1">
-            {errors.email}
-          </span>
-        )}
-        <DataInput
-          type="text"
-          placeholder="Company Name"
-          onChange={onChangeCmpName}
-        />
-        <DataTextArea
-          rows={4}
-          placeholder="Add your testimonial"
-          onChange={onChangeText}
-        />
-        {errors.text && (
-          <span className="text-red-600 text-sm	text-left p-1">
-            {errors.text}
-          </span>
-        )}
-        {contextHolder}
-        <Button
-          block
-          type="primary"
-          shape="round"
-          size="middle"
-          className="mt-4"
-          onClick={sendTestimonial}
+      <div className="grid grid-cols-2">
+        <div className="place-content-center p-8 rounded-2xl w-4/5 h-2/6 ml-10">
+          <h4 className="p-2 text-white">Preview Your Love</h4>
+          <TestimonialCard
+            custName={fullName ? fullName : "Name"}
+            email={email ? email : "Email"}
+            message={text ? text : "Your testimonial"}
+            cURL={cmpName ? cmpName : "Organization"}
+          />
+        </div>
+
+        <div
+          className="place-content-center p-8 rounded-2xl w-4/5 ml-10"
+          style={{ backgroundColor: "#282c34" }}
         >
-          SEND
-        </Button>
+          <label htmlFor="" className="text-sm px-2">
+            Name
+          </label>
+          <DataInput
+            placeholder="Enter your name"
+            onChange={onChangeFullName}
+          />
+          {errors.fullName && (
+            <span className="text-red-600 text-sm	text-left p-1">
+              {errors.fullName}
+            </span>
+          )}
+          <label htmlFor="" className="text-sm px-2">
+            Email
+          </label>
+          <DataInput
+            type="text"
+            placeholder="Enter your email"
+            onChange={onChangeEmail}
+          />
+          {errors.email && (
+            <span className="text-red-600 text-sm	text-left p-1">
+              {errors.email}
+            </span>
+          )}
+          <label htmlFor="" className="text-sm px-2">
+            Organization
+          </label>
+          <DataInput
+            type="text"
+            placeholder="Enter organization name"
+            onChange={onChangeCmpName}
+          />
+          <label htmlFor="" className="text-sm px-2">
+            Portray your love
+          </label>
+          <DataTextArea
+            rows={4}
+            placeholder="Add your testimonial"
+            onChange={onChangeText}
+          />
+          {errors.text && (
+            <span className="text-red-600 text-sm	text-left p-1">
+              {errors.text}
+            </span>
+          )}
+          {contextHolder}
+          <Button
+            block
+            type="primary"
+            shape="round"
+            size="middle"
+            className="mt-4"
+            onClick={sendTestimonial}
+          >
+            SEND
+          </Button>
+        </div>
       </div>
     </header>
   );

@@ -6,6 +6,7 @@ import { useAuth } from "../../Contexts/AuthContext";
 import { Axios } from "../../base";
 import { DataInput } from "../../Components/Input";
 import Logo from "../../Assets/userlovelogo.png";
+import { GoogleLogin } from "@react-oauth/google";
 
 type LoginPayload = {
   username: string;
@@ -67,6 +68,13 @@ const Login = () => {
   const onPasswordChange = (e: any) => {
     setpassword(e.target.value);
     setErrors((prevErrors) => ({ ...prevErrors, password: "" }));
+  };
+
+  const responseMessage = (response: any) => {
+    console.log(response);
+  };
+  const errorMessage = (error: any) => {
+    console.log(error);
   };
 
   const successAlert = () => {
@@ -140,9 +148,7 @@ const Login = () => {
           }
         })
         .catch((err) => {
-          console.log(
-            err || err.response
-          );
+          console.log(err || err.response);
         });
     } else {
       setErrors(errors);
@@ -160,8 +166,13 @@ const Login = () => {
           className="col-span-1 p-10 rounded-md w-full"
           style={{ backgroundColor: "#282c34" }}
         >
+          <GoogleLogin onSuccess={responseMessage} />
+          <hr className="mt-4 border-dotted" />
+          <label htmlFor="" className="text-sm px-2">
+            Email
+          </label>
           <DataInput
-            placeholder="Username"
+            placeholder="Enter your email"
             className="p-5 rounded bg-black	"
             onChange={onUsernameChange}
           />
@@ -170,6 +181,9 @@ const Login = () => {
               {errors.username}
             </span>
           )}
+          <label htmlFor="" className="text-sm px-2">
+            Password
+          </label>
           <DataInput
             type="password"
             placeholder="Password"
@@ -186,15 +200,15 @@ const Login = () => {
             block
             type="primary"
             size="middle"
-            className="rounded mt-4"
+            className="rounded p-5 mt-4 text-lg"
             onClick={onLogin}
           >
-            LOGIN
+            SIGN IN
           </Button>
           <p className=" text-sm text-start text-red-300">
-            Not a user?{" "}
+            Don't have an account?{" "}
             <Button type="link" size="small" onClick={toRegister}>
-              Register
+              Sign up
             </Button>
           </p>
         </div>

@@ -31,7 +31,7 @@ const TestimonialCard = styled((props: any) => (
           )}
         </div>
       </div>
-      <div className="row-span-2 text-md text-gray-200 flex-grow mt-2 p-2 tracking-normal">
+      <div className="row-span-2 text-md text-gray-200 flex-grow mt-2 px-2 tracking-normal">
         <p>{props.message}</p>
       </div>
       <div className="row-span-1">
@@ -43,14 +43,15 @@ const TestimonialCard = styled((props: any) => (
 ))`
   color: white;
   box-sizing: border-box;
-  background: #25282c;
-  height: 100%;
+  background: #35363d;
+  height: fit-content;
   border: 0 solid #c5d2dc;
   border-radius: 10px;
+  box-shadow: 1px 1px #5f6063;
   .ant-card-body {
     min-height: 150px;
     padding: 16px;
-    background: #25282c;
+    background: #35363d;
     border-radius: 10px;
   }
   .ant-card-body:hover {

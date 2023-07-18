@@ -1,5 +1,5 @@
 .App {
-  background-color: #151719;
+  background-color: #27272A;
   color: rgb(229 231 235);
   padding-left: 3%;
   padding-right: 3%;
@@ -18,7 +18,6 @@
 }
 
 .App-header {
-  background-color: #151719;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
