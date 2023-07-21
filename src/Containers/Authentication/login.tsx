@@ -7,10 +7,15 @@ import { Axios } from "../../base";
 import { DataInput } from "../../Components/Input";
 import Logo from "../../Assets/userlovelogo.png";
 import { GoogleLogin } from "@react-oauth/google";
+import jwt_decode from "jwt-decode";
 
 type LoginPayload = {
   username: string;
   password?: string;
+};
+
+type googlePayload = {
+  username: string;
 };
 
 interface FormErrors {
@@ -70,10 +75,49 @@ const Login = () => {
     setErrors((prevErrors) => ({ ...prevErrors, password: "" }));
   };
 
-  const responseMessage = (response: any) => {
-    console.log(response);
+  const onGoogleSuccessResponse = (response: any) => {
+    var decoded = response && jwt_decode(response.credential);
+    let username = decoded.email;
+    if (decoded.email_verified !== true) {
+      return errorAlert("User is not verified");
+    }
+
+    const payload: googlePayload = {
+      username,
+    };
+    var Headers = {
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "application/json",
+    };
+
+    Axios.post("/login", payload, { headers: Headers })
+      .then((response) => {
+        if (response.data.data) {
+          const { accessToken, user_id, user_name, username, cmpName, cmpId } =
+            response.data.data;
+          localStorage.setItem("TOKEN", accessToken);
+          localStorage.setItem("CMP_id", cmpId);
+          dispatch({
+            type: "setUser",
+            payload: {
+              accessToken,
+              user_id,
+              user_name,
+              username,
+              cmpName,
+              cmpId,
+            },
+          });
+          successAlert();
+        } else {
+          return errorAlert(response.data.msg + "! Please sign up");
+        }
+      })
+      .catch((err) => {
+        console.log(err || err.response);
+      });
   };
-  const errorMessage = (error: any) => {
+  const onGoogleError = (error: any) => {
     console.log(error);
   };
 
@@ -166,8 +210,6 @@ const Login = () => {
           className="col-span-1 p-10 rounded-md w-full"
           style={{ backgroundColor: "#282c34" }}
         >
-          <GoogleLogin onSuccess={responseMessage} />
-          <hr className="mt-4 border-dotted" />
           <label htmlFor="" className="text-sm px-2">
             Email
           </label>
@@ -211,6 +253,15 @@ const Login = () => {
               Sign up
             </Button>
           </p>
+          <hr className="mt-4 mb-4 border-dotted" />
+          <div className="flex justify-center items-center">
+            <GoogleLogin
+              shape="pill"
+              useOneTap
+              onSuccess={onGoogleSuccessResponse}
+              onError={() => onGoogleError}
+            />
+          </div>
         </div>
       </div>
     </header>

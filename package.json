@@ -17,6 +17,7 @@
     "antd-img-crop": "^4.2.3",
     "axios": "^0.27.2",
     "crypto-js": "^4.1.1",
+    "jwt-decode": "^3.1.2",
     "moment": "^2.29.4",
     "npm": "^8.5.1",
     "react": "^18.2.0",

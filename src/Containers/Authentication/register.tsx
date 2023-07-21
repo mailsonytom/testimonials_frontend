@@ -152,8 +152,11 @@ const Register = () => {
           style={{ backgroundColor: "#282c34" }}
         >
           <div>
+          <label htmlFor="" className="text-sm px-2">
+            Name
+          </label>
             <DataInput
-              placeholder="Full Name"
+              placeholder="Enter your name"
               className="p-5 rounded bg-black"
               onChange={changeFullName}
             />
@@ -162,8 +165,11 @@ const Register = () => {
                 {errors.fullName}
               </span>
             )}
+            <label htmlFor="" className="text-sm px-2">
+            Organization
+          </label>
             <DataInput
-              placeholder="Company Name"
+              placeholder="Enter your organization name"
               className="p-5 rounded bg-black"
               onChange={changeCmpName}
             />
@@ -172,8 +178,11 @@ const Register = () => {
                 {errors.cmpName}
               </span>
             )}
+            <label htmlFor="" className="text-sm px-2">
+            Email
+          </label>
             <DataInput
-              placeholder="Username"
+              placeholder="Enter your email"
               className="p-5 rounded bg-black"
               onChange={changeUsername}
             />
@@ -182,6 +191,9 @@ const Register = () => {
                 {errors.username}
               </span>
             )}
+            <label htmlFor="" className="text-sm px-2">
+            Password
+          </label>
             <DataInput
               type="password"
               placeholder="Password"
@@ -202,12 +214,12 @@ const Register = () => {
             className="rounded mt-4"
             onClick={registerUser}
           >
-            REGISTER
+            SIGN UP
           </Button>
           <p className="text-red-300 text-sm text-start">
-            Already a user?{" "}
+            Already have an account?{" "}
             <Button type="link" size="small" onClick={toLogin}>
-              Login
+              Sign in
             </Button>
           </p>
         </div>
