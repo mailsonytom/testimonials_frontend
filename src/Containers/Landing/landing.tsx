@@ -1,6 +1,5 @@
 import React from "react";
-import { Input, Button } from "antd";
-// import "antd/dist/antd.css";
+import { Button } from "antd";
 import { useNavigate } from "react-router-dom";
 
 const Landing = () => {
